@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POS Billing System</title>
-  <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="https://logopond.com/logos/066abbc22b4f3fb9c0816fc16fb8965d.png">
+
+    
+
 </head>
 
 <body>
@@ -14,8 +18,6 @@
         <div class="card">
             <h2>Add to Cart</h2>
             <div class="product-group">
-
-
                 <div>
                     <label for="product-filter">Product Desc</label>
                     <input type="text" id="product-filter" name="product-filter" placeholder="Enter Product id..."
@@ -34,6 +36,8 @@
                     <button type="submit" id="addtocart">Add to Cart</button>
                 </div>
             </div>
+            <br>
+
             <h2>Cart Items </h2>
             <div id="cart-items">
                 <table>
@@ -43,6 +47,8 @@
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Total</th>
+                            <th>Action</th>
+                            
                         </tr>
                     </thead>
                     <tbody id="cart-items-body">
@@ -52,10 +58,12 @@
             </div>
 
         </div>
+    </div>
 
 
+    <h2 id="finalbill">Final Bill: $0</h2>
 
-        <script src="script.js"> </script>
+    <script src="script.js"> </script>
 </body>
 
 </html>

@@ -64,3 +64,17 @@ It is used to create a new array with the results of calling a provided function
 reduce()
 
 It is used to apply a function against an accumulator and each element of the array (from left to right) to reduce the array to a single value.
+
+.focus() 
+move the cursor to the input field and make it active.
+
+alert()
+It is used to display an alert box with a specified message and an OK button.
+
+
+insertRow()
+It is used to insert a new row in a table.
+
+insertCell()
+It is used to insert a new cell in a table row.
+

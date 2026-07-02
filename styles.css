@@ -54,8 +54,26 @@ tbody{
 td{
     border: 1px solid black;
     text-align: center;
+    padding: 10px;
+
 }
 th{
     border: 1px solid black;
     text-align: center;
+    padding: 10px;
+}
+
+.deletebtn{
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+#addtocart{
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
 }
