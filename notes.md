@@ -78,3 +78,6 @@ It is used to insert a new row in a table.
 insertCell()
 It is used to insert a new cell in a table row.
 
+setAttribute()
+It is used to set the value of an attribute on the specified element.
+
