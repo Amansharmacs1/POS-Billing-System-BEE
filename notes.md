@@ -123,3 +123,13 @@ console.log(localStorage.length);
 
 Since Local Storage stores only strings, use JSON.stringify() and JSON.parse().
 Local Storage can store only strings. If we want to store an object or an array, we first convert it into a JSON string using JSON.stringify(). When retrieving it, we convert the JSON string back into the original object or array using JSON.parse().
+
+
+DOMContentLoaded()
+DOMContentLoaded is an event that fires when the HTML document has been completely loaded and parsed, before images, videos, and other external resources finish loading.
+
+TODO-
+INVOICE BUTTON
+BILL RECEPT GENERATION
+REMOVE DUPLICATION OF ROW
+TRANSACTION HISTORY

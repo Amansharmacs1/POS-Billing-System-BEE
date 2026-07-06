@@ -182,4 +182,5 @@ function loadCartFromLocalStorage() {
 
     calculateTotal();
 }
+
 loadCartFromLocalStorage();
