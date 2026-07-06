@@ -81,3 +81,45 @@ It is used to insert a new cell in a table row.
 setAttribute()
 It is used to set the value of an attribute on the specified element.
 
+
+EventBubbling()
+Event bubbling is a concept in JavaScript where an event that occurs on a child element automatically propagates (or "bubbles up") to its parent elements in the DOM hierarchy.
+
+Difference between Local Storage, Session Storage and Cookies
+The main difference is how long the data lasts and whether it is sent to the server. 
+Local Storage stores data permanently until it's manually removed and is commonly used for themes or shopping carts.
+Local Storage: ~5–10 MB, permanent.
+
+Session Storage stores data only for the current browser tab and is cleared when the tab is closed, making it suitable for temporary data like multi-step forms.
+Session Storage: ~5–10 MB, lasts until the tab closes.
+
+Cookies are much smaller in size, around 4 KB, and are automatically sent with every HTTP request, so they are commonly used for authentication and maintaining user sessions.
+Cookies: ~4 KB, automatically sent with every HTTP request.
+
+
+Extension Storage is a storage API provided by browsers for extensions to save data such as user settings, preferences, or cached information. Unlike Local Storage, it is designed specifically for browser extensions and can synchronize data across devices if needed.
+
+Local Storage Functions:
+1. setItem()
+Stores data as a key-value pair.
+localStorage.setItem("name", "Ronak");
+
+2. getItem()
+Retrieves data using its key.
+let name = localStorage.getItem("name");
+console.log(name);
+
+3. removeItem()
+Removes a single item.
+localStorage.removeItem("name");
+
+4. clear()
+Removes all data from Local Storage.
+localStorage.clear();
+
+5. length (Property)
+Returns the number of stored items.
+console.log(localStorage.length);
+
+Since Local Storage stores only strings, use JSON.stringify() and JSON.parse().
+Local Storage can store only strings. If we want to store an object or an array, we first convert it into a JSON string using JSON.stringify(). When retrieving it, we convert the JSON string back into the original object or array using JSON.parse().

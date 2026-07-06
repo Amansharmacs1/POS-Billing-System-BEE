@@ -21,7 +21,8 @@ const products = [
     }
 ];
 
-let cart = [];
+let cart = JSON.parse(localStorage.getItem("mycart")) || [] ;
+
 
 const producfilterInput = document.getElementById("product-filter");
 const productprice = document.getElementById("product-price");
@@ -44,7 +45,7 @@ function getData(id) {
 
     producfilterInput.value = product.name;
     productprice.value = product.price;
-    productqty.value = 1;
+    productqty.value = 0;
     productqty.focus();
 }
 
@@ -77,33 +78,37 @@ function addNewRow(product, qty) {
     };
 
     cart.push(item);
+    saveCartToLocalStorage();
 
-    const deleteBtn = cell5.querySelector(".deletebtn");
 
-    deleteBtn.addEventListener("click", () => {
-        row.remove();
 
-        cart = cart.filter(item => item.Id !== uniqueId);
+    // const deleteBtn = cell5.querySelector(".deletebtn");
 
-        calculateTotal();
-    });
+    // deleteBtn.addEventListener("click", () => {
+    //     row.remove();
+
+    //     cart = cart.filter(item => item.Id !== uniqueId);
+
+    //     calculateTotal();
+    // });
 }
 
 function calculateTotal() {
-
-    const total = cart.reduce((acc, item) => acc + item.total, 0);
-
+    const total = cart.reduce(
+    (acc, item) => acc + Number(item.total),
+    0
+);
     finalbill.innerHTML = `Total Bill: ₹${total.toFixed(2)}`;
 }
 
 producfilterInput.addEventListener("keydown", (event) => {
-
     if (event.key === "Enter" && event.target.value !== "") {
         getData(event.target.value);
     }
 
 });
 
+//Add to Cart
 addtocardbtn.addEventListener("click", () => {
 
     if (
@@ -135,3 +140,46 @@ addtocardbtn.addEventListener("click", () => {
     producfilterInput.focus();
 
 });
+
+//Functioning of delete button of each row
+tableBody.addEventListener("click", (event) => {
+    const button = event.target.closest(".deletebtn");
+    if (button) {
+        const row = button.closest("tr");
+        row.remove();
+
+        const rowId = row.getAttribute("data-id");
+        cart = cart.filter(data => data.Id != rowId);
+        calculateTotal();
+        saveCartToLocalStorage();
+    }
+
+})
+
+function saveCartToLocalStorage(){
+    localStorage.setItem("mycart",JSON.stringify(cart));
+}
+
+function loadCartFromLocalStorage() {
+    tableBody.innerHTML = "";
+
+    cart.forEach(item => {
+        const row = tableBody.insertRow();
+        row.setAttribute("data-id", item.Id);
+
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        const cell3 = row.insertCell(2);
+        const cell4 = row.insertCell(3);
+        const cell5 = row.insertCell(4);
+
+        cell1.innerHTML = item.name;
+        cell2.innerHTML = item.price;
+        cell3.innerHTML = item.qty;
+        cell4.innerHTML = item.total.toFixed(2);
+        cell5.innerHTML = `<button class="deletebtn" aria-label="Delete">Delete</button>`;
+    });
+
+    calculateTotal();
+}
+loadCartFromLocalStorage();
