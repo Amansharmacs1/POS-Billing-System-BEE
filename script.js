@@ -61,56 +61,30 @@ producfilterInput.addEventListener("keydown", (event) => {
 });
 function addNewRow(product, qty) {
 
-    const total = product.price * qty;
-    const row = tableBody.insertRow();
-
-    const uniqueId = Date.now().toString();
-    row.setAttribute("data-id", uniqueId);
-
-    const cell1 = row.insertCell(0);
-    const cell2 = row.insertCell(1);
-    const cell3 = row.insertCell(2);
-    const cell4 = row.insertCell(3);
-    const cell5 = row.insertCell(4);
-
-    cell1.innerHTML = product.name;
-    cell2.innerHTML = product.price;
-    cell3.innerHTML = qty;
-    cell4.innerHTML = total.toFixed(2);
-    cell5.innerHTML = `<button class="deletebtn" aria-label="Delete">Delete</button>`;
     const item = {
-        Id: uniqueId,
+        Id: Date.now().toString(),
         name: product.name,
         price: product.price,
         qty: qty,
-        total: total
+        total: product.price * qty
     };
-    
+
     cart.push(item);
+
     saveCartToLocalStorage();
-    calculateTotal();
-
-
-
-    // const deleteBtn = cell5.querySelector(".deletebtn");
-
-    // deleteBtn.addEventListener("click", () => {
-    //     row.remove();
-
-    //     cart = cart.filter(item => item.Id !== uniqueId);
-
-    //     calculateTotal();
-    // });
+    loadCartFromLocalStorage();
 }
+
+    
 
 function calculateTotal() {
 
-    let sub = 0;
-    cart.forEach(item => {
-        sub += item.total;
-    });
-    let gst = sub * 0.18;      // 18% GST
-    let grand = sub + gst;
+    const sub = cart.reduce((sum, item) => {
+        return sum + item.price * item.qty;
+    }, 0);
+
+    const gst = sub * 0.18;
+    const grand = sub + gst;
 
     totalitems.textContent = cart.length;
     subtotal.textContent = sub.toFixed(2);
@@ -118,7 +92,6 @@ function calculateTotal() {
     grandtotal.textContent = grand.toFixed(2);
 }
 
-//Add to Cart
 addtocardbtn.addEventListener("click", () => {
 
     if (
@@ -139,8 +112,25 @@ addtocardbtn.addEventListener("click", () => {
         return;
     }
 
-    addNewRow(product, Number(productqty.value));
- 
+    const qty = Number(productqty.value);
+
+    const existingItem = cart.find(item => item.name === product.name);
+
+    if (existingItem) {
+
+        existingItem.qty += qty;
+        existingItem.total = existingItem.price * existingItem.qty;
+
+        saveCartToLocalStorage();
+        loadCartFromLocalStorage();
+
+    } else {
+
+        addNewRow(product, qty);
+
+    }
+
+    calculateTotal();
 
     producfilterInput.value = "";
     productprice.value = "";
@@ -170,26 +160,25 @@ function saveCartToLocalStorage(){
 }
 
 function loadCartFromLocalStorage() {
+
     tableBody.innerHTML = "";
 
     cart.forEach(item => {
+
         const row = tableBody.insertRow();
         row.setAttribute("data-id", item.Id);
 
-        const cell1 = row.insertCell(0);
-        const cell2 = row.insertCell(1);
-        const cell3 = row.insertCell(2);
-        const cell4 = row.insertCell(3);
-        const cell5 = row.insertCell(4);
+        row.insertCell(0).textContent = item.name;
+        row.insertCell(1).textContent = item.price;
+        row.insertCell(2).textContent = item.qty;
+        row.insertCell(3).textContent = (item.price * item.qty).toFixed(2);
 
-        cell1.innerHTML = item.name;
-        cell2.innerHTML = item.price;
-        cell3.innerHTML = item.qty;
-        cell4.innerHTML = item.total.toFixed(2);
-        cell5.innerHTML = `<button class="deletebtn" aria-label="Delete">Delete</button>`;
+        row.insertCell(4).innerHTML =
+            `<button class="deletebtn">Delete</button>`;
+
     });
 
-   
+    calculateTotal();
 }
 
 finalbill.addEventListener("click", () => {
