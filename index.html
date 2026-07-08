@@ -57,15 +57,55 @@
                 </table>
             </div>
 
+            <div class="bill-card">
+                <h2>Bill Summary</h2>
+
+                <div class="billsummary">
+                    <div class="total-items">
+                        Total Items: <span id="totalitems">0</span>
+                    </div>
+
+                    <div class="sub-total">
+                        Sub Total: <span id="subtotal">0.00</span>
+                    </div>
+
+                    <div class="GST">
+                        GST: <span id="totalGST">0.00</span>
+                    </div>
+
+                    <div class="grand-total">
+                        Grand Total: <span id="grandtotal">0.00</span>
+                    </div>
+                </div>
+            </div>
+           <button id="finalbill">Generate Invoice</button>
+           <div class="invoice" id="invoice" style="display: none;">
+    <h2>Invoice</h2>
+
+    <p><strong>Invoice No:</strong> <span id="invoice-number"></span></p>
+    <p><strong>Date:</strong> <span id="invoice-date"></span></p>
+    <p><strong>Time:</strong> <span id="invoice-time"></span></p>
+
+    <table id="invoice-table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody id="invoice-items"></tbody>
+    </table>
+
+    <p><strong>Subtotal:</strong> ₹<span id="invoice-subtotal"></span></p>
+    <p><strong>GST:</strong> ₹<span id="invoice-gst"></span></p>
+    <p><strong>Grand Total:</strong> ₹<span id="invoice-grandtotal"></span></p>
+</div>
         </div>
     </div>
 
-    
-    <div class="finalbill">
-        <h1>BILL RECEIPT</h1>
 
-        <h2 id="finalbill">Final Bill: $0</h2>
-    </div>
 
 
     <script src="script.js"> </script>

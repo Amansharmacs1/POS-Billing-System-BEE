@@ -78,3 +78,37 @@ th{
     padding: 5px 10px;
     cursor: pointer;
 }
+
+.bill-card{
+    width: 350px;
+    border: 1px solid black;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.billsummary{
+    display: flex;
+    flex-direction: column;
+}
+
+.billsummary div{
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+}
+
+.billsummary div:last-child{
+    border-bottom: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.billsummary span{
+    font-weight: bold;
+}
+
+.grand-total{
+    color: green;
+}

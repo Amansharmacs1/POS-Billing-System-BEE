@@ -29,7 +29,13 @@ const productprice = document.getElementById("product-price");
 const productqty = document.getElementById("product-qty");
 const addtocardbtn = document.getElementById("addtocart");
 const tableBody = document.getElementById("cart-items-body");
+const totalitems=document.getElementById("totalitems");
+const subtotal=document.getElementById("subtotal");
+const totalGST=document.getElementById("totalGST");
+const grandtotal=document.getElementById("grandtotal");
 const finalbill = document.getElementById("finalbill");
+const invoice = document.getElementById("invoice");
+const invoiceItems = document.getElementById("invoice-items");
 
 function getData(id) {
     const product = products.find(product => product.productId === Number(id));
@@ -45,10 +51,14 @@ function getData(id) {
 
     producfilterInput.value = product.name;
     productprice.value = product.price;
-    productqty.value = 0;
+    productqty.value = 1;
     productqty.focus();
 }
-
+producfilterInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        getData(producfilterInput.value);
+    }
+});
 function addNewRow(product, qty) {
 
     const total = product.price * qty;
@@ -68,7 +78,6 @@ function addNewRow(product, qty) {
     cell3.innerHTML = qty;
     cell4.innerHTML = total.toFixed(2);
     cell5.innerHTML = `<button class="deletebtn" aria-label="Delete">Delete</button>`;
-
     const item = {
         Id: uniqueId,
         name: product.name,
@@ -76,9 +85,10 @@ function addNewRow(product, qty) {
         qty: qty,
         total: total
     };
-
+    
     cart.push(item);
     saveCartToLocalStorage();
+    calculateTotal();
 
 
 
@@ -94,19 +104,19 @@ function addNewRow(product, qty) {
 }
 
 function calculateTotal() {
-    const total = cart.reduce(
-    (acc, item) => acc + Number(item.total),
-    0
-);
-    finalbill.innerHTML = `Total Bill: ₹${total.toFixed(2)}`;
+
+    let sub = 0;
+    cart.forEach(item => {
+        sub += item.total;
+    });
+    let gst = sub * 0.18;      // 18% GST
+    let grand = sub + gst;
+
+    totalitems.textContent = cart.length;
+    subtotal.textContent = sub.toFixed(2);
+    totalGST.textContent = gst.toFixed(2);
+    grandtotal.textContent = grand.toFixed(2);
 }
-
-producfilterInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" && event.target.value !== "") {
-        getData(event.target.value);
-    }
-
-});
 
 //Add to Cart
 addtocardbtn.addEventListener("click", () => {
@@ -130,8 +140,7 @@ addtocardbtn.addEventListener("click", () => {
     }
 
     addNewRow(product, Number(productqty.value));
-
-    calculateTotal();
+ 
 
     producfilterInput.value = "";
     productprice.value = "";
@@ -150,8 +159,8 @@ tableBody.addEventListener("click", (event) => {
 
         const rowId = row.getAttribute("data-id");
         cart = cart.filter(data => data.Id != rowId);
-        calculateTotal();
         saveCartToLocalStorage();
+        calculateTotal();
     }
 
 })
@@ -180,7 +189,49 @@ function loadCartFromLocalStorage() {
         cell5.innerHTML = `<button class="deletebtn" aria-label="Delete">Delete</button>`;
     });
 
-    calculateTotal();
+   
 }
 
+finalbill.addEventListener("click", () => {
+
+    invoice.style.display = "block";
+
+    invoiceItems.innerHTML = "";
+
+    let sub = 0;
+
+    cart.forEach(item => {
+
+        sub += item.price * item.qty;
+
+        invoiceItems.innerHTML += `
+            <tr>
+                <td>${item.name}</td>
+                <td>${item.price}</td>
+                <td>${item.qty}</td>
+                <td>${item.price * item.qty}</td>
+            </tr>
+        `;
+    });
+
+    const gst = sub * 0.18;
+    const grand = sub + gst;
+
+    document.getElementById("invoice-subtotal").textContent = sub.toFixed(2);
+    document.getElementById("invoice-gst").textContent = gst.toFixed(2);
+    document.getElementById("invoice-grandtotal").textContent = grand.toFixed(2);
+
+    const now = new Date();
+
+    document.getElementById("invoice-number").textContent =
+        "INV-" + Date.now();
+
+    document.getElementById("invoice-date").textContent =
+        now.toLocaleDateString();
+
+    document.getElementById("invoice-time").textContent =
+        now.toLocaleTimeString();
+});
+
 loadCartFromLocalStorage();
+calculateTotal();
