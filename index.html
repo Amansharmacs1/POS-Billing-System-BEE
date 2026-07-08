@@ -78,35 +78,70 @@
                     </div>
                 </div>
             </div>
-           <button id="finalbill">Generate Invoice</button>
-           <div class="invoice" id="invoice" style="display: none;">
-    <h2>Invoice</h2>
+            <button id="finalbill">Generate Invoice</button>
+            <div class="invoice" id="invoice">
 
-    <p><strong>Invoice No:</strong> <span id="invoice-number"></span></p>
-    <p><strong>Date:</strong> <span id="invoice-date"></span></p>
-    <p><strong>Time:</strong> <span id="invoice-time"></span></p>
+                <h2>RETAIL BILL</h2>
 
-    <table id="invoice-table">
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Price</th>
-                <th>Qty</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody id="invoice-items"></tbody>
-    </table>
+                <hr>
 
-    <p><strong>Subtotal:</strong> ₹<span id="invoice-subtotal"></span></p>
-    <p><strong>GST:</strong> ₹<span id="invoice-gst"></span></p>
-    <p><strong>Grand Total:</strong> ₹<span id="invoice-grandtotal"></span></p>
-</div>
+                <p>
+                    <span>Invoice No.</span>
+                    <span id="invoice-number"></span>
+                </p>
+
+                <p>
+                    <span>Date</span>
+                    <span id="invoice-date"></span>
+                </p>
+
+                <p>
+                    <span>Time</span>
+                    <span id="invoice-time"></span>
+                </p>
+
+                <h3>Purchased Items</h3>
+
+                <table id="invoice-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="invoice-items">
+
+                    </tbody>
+                </table>
+
+                <div class="summary">
+                    <p>
+                        <span>Subtotal</span>
+                        <span>₹<span id="invoice-subtotal"></span></span>
+                    </p>
+
+                    <p>
+                        <span>GST (18%)</span>
+                        <span>₹<span id="invoice-gst"></span></span>
+                    </p>
+
+                    <p class="grand">
+                        <span>Grand Total</span>
+                        <span>₹<span id="invoice-grandtotal"></span></span>
+                    </p>
+                </div>
+
+                <div class="footer">
+                    <p>Thank You for Shopping!</p>
+                    <p>Visit Again </p>
+                </div>
+
+            </div>
         </div>
     </div>
-
-
-
 
     <script src="script.js"> </script>
 </body>
